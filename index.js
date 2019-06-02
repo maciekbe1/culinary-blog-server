@@ -1,33 +1,17 @@
 import express from "express";
-import cors from "cors";
 import mongoose from "mongoose";
 import { ApolloServer } from "apollo-server-express";
-import { typeDefs } from "./schema/typeDefs";
-import { resolvers } from "./schema/resolvers";
-import post from "./routers/post";
+import { typeDefs } from "./graphql/schema/";
+import { resolvers } from "./graphql/resolvers/";
+import bodyParser from "body-parser";
+// import cors from "cors";
+
 require("dotenv").config();
 
 const startServer = async () => {
     const app = express();
-    const allowedOrigins = ["http://localhost:3000"];
 
-    app.use(
-        cors({
-            origin: function(origin, callback) {
-                if (!origin) return callback(null, true);
-                if (allowedOrigins.indexOf(origin) === -1) {
-                    var msg =
-                        "The CORS policy for this site does not " +
-                        "allow access from the specified Origin.";
-                    return callback(new Error(msg), false);
-                }
-                return callback(null, true);
-            }
-        })
-    );
-
-    app.use(express.json());
-    app.use("/api/posts", post);
+    app.use(bodyParser.json());
     const server = new ApolloServer({
         typeDefs,
         resolvers

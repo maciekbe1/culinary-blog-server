@@ -11,12 +11,8 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    content: {
+    date: {
         type: String,
-        required: true
-    },
-    created: {
-        type: Date,
         default: Date.now()
     },
     city: {
