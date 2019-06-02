@@ -12,7 +12,7 @@ export const typeDefs = gql`
     type Query {
         posts: [Post!]!
         hello: String
-        post(id: String!): Post!
+        getPost(id: ID!): Post!
     }
     type Mutation {
         createPost(

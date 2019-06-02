@@ -4,7 +4,10 @@ export const resolvers = {
     Query: {
         posts: () => Post.find(),
         hello: () => "hi",
-        post: id => Post.findOne(id)
+        getPost: async (roots, { id }, { Post }) => {
+            const post = await Post.findOne({ id });
+            return post;
+        }
     },
     Mutation: {
         createPost: async (_, { title, text, date, city, street }) => {
