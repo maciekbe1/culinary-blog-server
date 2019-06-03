@@ -2,7 +2,7 @@ import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
     type Post {
-        id: ID!
+        _id: ID!
         title: String!
         text: String!
         date: String!
@@ -12,7 +12,7 @@ export const typeDefs = gql`
     type Query {
         posts: [Post!]!
         hello: String
-        getPost(id: ID!): Post!
+        getPost(_id: ID!): Post!
     }
     type Mutation {
         createPost(

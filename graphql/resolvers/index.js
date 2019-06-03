@@ -2,12 +2,9 @@ import { Post } from "../../models/Post";
 
 export const resolvers = {
     Query: {
+        getPost: (obj, args, context, info) => Post.findById(args._id),
         posts: () => Post.find(),
-        hello: () => "hi",
-        getPost: async (roots, { id }, { Post }) => {
-            const post = await Post.findOne({ id });
-            return post;
-        }
+        hello: () => "hi"
     },
     Mutation: {
         createPost: async (_, { title, text, date, city, street }) => {

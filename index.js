@@ -9,13 +9,12 @@ require("dotenv").config();
 
 const startServer = async () => {
     const app = express();
-
-    app.use(bodyParser.json());
+    const path = "/graphql";
     const server = new ApolloServer({
         typeDefs,
         resolvers
     });
-    server.applyMiddleware({ app });
+    server.applyMiddleware({ app, path, bodyParser });
 
     await mongoose
         .connect(process.env.MONGO_URI, {
