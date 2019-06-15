@@ -9,10 +9,16 @@ export const typeDefs = gql`
         city: String!
         street: String!
     }
+    type User {
+        _id: ID!
+        login: String!
+        password: String!
+    }
     type Query {
         posts: [Post!]!
         hello: String
         getPost(_id: ID!): Post!
+        getUser(_id: ID!): User!
     }
     type Mutation {
         createPost(
@@ -22,5 +28,9 @@ export const typeDefs = gql`
             city: String!
             street: String!
         ): Post!
+        createUser(
+            login: String! 
+            password: String!
+        ): User!
     }
 `;

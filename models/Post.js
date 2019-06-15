@@ -31,8 +31,7 @@ export function validatePost(post) {
         title: Joi.string()
             .min(3)
             .max(50)
-            .required(),
-        content: Joi.string().required()
+            .required()
     };
     return Joi.validate(post, schema);
 }
