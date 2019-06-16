@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs } from "./graphql/schema/";
 import { resolvers } from "./graphql/resolvers/";
+// import jwt from "jsonwebtoken";
 import bodyParser from "body-parser";
 
 require("dotenv").config();
@@ -13,6 +14,14 @@ const startServer = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers
+        // ,
+        // context: async ({ req }) => {
+        //     const token = req.headers.authorization || "";
+        //     const currentUser = await jwt.verify(token, process.env.SECRET);
+        //     req.currentUser = currentUser;
+        //     console.log(currentUser);
+        //     return currentUser;
+        // }
     });
     server.applyMiddleware({ app, path, bodyParser });
 

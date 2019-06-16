@@ -14,6 +14,12 @@ export const typeDefs = gql`
         login: String!
         password: String!
     }
+    type AuthData {
+        userId: ID!
+        login: String!
+        token: String!
+        tokenExp: Int!
+    }
     type Query {
         posts: [Post!]!
         hello: String
@@ -28,9 +34,7 @@ export const typeDefs = gql`
             city: String!
             street: String!
         ): Post!
-        createUser(
-            login: String! 
-            password: String!
-        ): User!
+        createUser(login: String!, password: String!): User!
+        signIn(login: String!, password: String!): AuthData!
     }
 `;
