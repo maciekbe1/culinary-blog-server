@@ -15,13 +15,14 @@ export const typeDefs = gql`
         password: String!
     }
     type AuthData {
-        userId: ID!
-        login: String!
         token: String!
-        tokenExp: Int!
+    }
+    type PostsResponse {
+        posts: [Post!]!
+        postCount: Int!
     }
     type Query {
-        posts: [Post!]!
+        AllPosts(skip: Int, first: Int): PostsResponse!
         hello: String
         getPost(_id: ID!): Post!
         getUser(_id: ID!): User!

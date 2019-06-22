@@ -5,7 +5,19 @@ import jwt from "jsonwebtoken";
 export const resolvers = {
     Query: {
         getPost: (obj, args, context, info) => Post.findById(args._id),
-        posts: () => Post.find(),
+        AllPosts: async (obj, { first, skip }) => {
+            const totalPosts = await Post.find().countDocuments();
+            if (!first) {
+                return await Post.find();
+            }
+            const result = {
+                posts: Post.find()
+                    .skip(skip)
+                    .limit(first),
+                postCount: totalPosts
+            };
+            return await result;
+        },
         hello: () => "hi",
         getUser: (obj, args, context, info) => User.findById(args._id)
     },
@@ -41,19 +53,11 @@ export const resolvers = {
             if (!isEqual) {
                 throw new Error("Password is incorrect!");
             }
-            const token = jwt.sign(
-                { userId: user.id, login: user.login },
-                process.env.SECRET,
-                {
-                    expiresIn: "1h"
-                }
-            );
-            return {
-                userId: user.id,
-                login: user.login,
-                token: token,
-                tokenExp: 1
-            };
+            return { token: createToken(user, process.env.SECRET, "1h") };
         }
     }
+};
+const createToken = (user, secret, expiresIn) => {
+    const { login, id } = user;
+    return jwt.sign({ login, id }, secret, { expiresIn });
 };
