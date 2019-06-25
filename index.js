@@ -12,6 +12,7 @@ const startServer = async () => {
     const app = express();
     const path = "/graphql";
     const server = new ApolloServer({
+        cors: false,
         typeDefs,
         resolvers
         // ,
