@@ -5,13 +5,16 @@ import jwt from "jsonwebtoken";
 export const resolvers = {
     Query: {
         getPost: (obj, args, context, info) => Post.findById(args._id),
-        AllPosts: async (obj, { first, skip }) => {
-            const totalPosts = await Post.find().countDocuments();
-            if (!first) {
-                return await Post.find();
-            }
+        AllPosts: async (obj, { first, skip, search }) => {
+            const totalPosts = await Post.find({
+                title: { $regex: search, $options: "i" }
+            }).countDocuments();
+            // if (!first) {
+            //     return await { posts: Post.find(), totalPosts };
+            // }
             const result = {
-                posts: Post.find()
+                posts: Post.find({ title: { $regex: search, $options: "i" } })
+                    .sort({ date: -1 })
                     .skip(skip)
                     .limit(first),
                 postCount: totalPosts

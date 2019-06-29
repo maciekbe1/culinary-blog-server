@@ -1,14 +1,6 @@
 import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
-    type Post {
-        _id: ID!
-        title: String!
-        text: String!
-        date: String!
-        city: String!
-        street: String!
-    }
     type User {
         _id: ID!
         login: String!
@@ -17,12 +9,20 @@ export const typeDefs = gql`
     type AuthData {
         token: String!
     }
+    type Post {
+        _id: ID!
+        title: String!
+        text: String!
+        date: String!
+        city: String!
+        street: String!
+    }
     type PostsResponse {
         posts: [Post!]!
         postCount: Int!
     }
     type Query {
-        AllPosts(skip: Int, first: Int): PostsResponse!
+        AllPosts(first: Int, skip: Int, search: String): PostsResponse!
         hello: String
         getPost(_id: ID!): Post!
         getUser(_id: ID!): User!
